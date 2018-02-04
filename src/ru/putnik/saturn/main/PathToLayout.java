@@ -5,5 +5,5 @@ package ru.putnik.saturn.main;
  */
 public interface PathToLayout {
     //Метод-марка для удобного вывода адреса к макету окна
-    public String getPathToLayout();
+    String getPathToLayout();
 }
