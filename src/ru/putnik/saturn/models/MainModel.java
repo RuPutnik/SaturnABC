@@ -9,6 +9,8 @@ import javafx.scene.control.TextInputControl;
  * Created by My Computer on 31.01.2018.
  */
 public class MainModel {
+    public static String nameSelectedCrypt="Не выбран";
+    public static int numberSelectedCrypt=0;
     //Обработчик, отвечающий за очистку левого(правого) окна или поля для ключа при нажатии на кнопку
     public static class CleanText<T extends TextInputControl> implements EventHandler<ActionEvent>{
         T textComponent;

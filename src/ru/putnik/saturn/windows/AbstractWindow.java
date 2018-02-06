@@ -19,14 +19,16 @@ public abstract class AbstractWindow extends Application implements PathToLayout
     @Override
     public void start(Stage stage) throws Exception {}
 
-    public static final String NAME_PROGRAM="SaturnABC";
-    public static final String VERSION_PROGRAM="0.2";
+    private static final String NAME_PROGRAM="SaturnABC";
+    private static final String VERSION_PROGRAM="version: 0.3";
     private static final String LOGO_PATH="/ru/putnik/saturn/resources/images/iconSaturn.png";
+    private static Stage stage;
     //Отрисовываем окно программы
     public void renderWindow(Stage mainStage,int width,int height){
+        stage=mainStage;
         Parent parent=null;
         try {
-            parent= FXMLLoader.load(getClass().getResource(getPathToLayout()));
+            parent=FXMLLoader.load(getClass().getResource(getPathToLayout()));
         } catch (IOException e) {
             System.out.println("Layout "+getPathToLayout()+" not found or generated error!");
             e.printStackTrace();
@@ -46,4 +48,11 @@ public abstract class AbstractWindow extends Application implements PathToLayout
     }
 
     public abstract Stage getStage();
+    public static void close(){
+        if(stage!=null) {
+            stage.close();
+        }else {
+            System.out.println("Вы не можете закрыть окно до его создания!");
+        }
+    }
 }

@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  */
 public class MainWindow extends AbstractWindow{
     public static Stage mainStage;
-    public CryptoListWindow cryptoListWindow=new CryptoListWindow();
+    public CryptoListWindow cryptoListWindow;
     public SettingWindow settingWindow=new SettingWindow();
     public InfoWindow infoWindow=new InfoWindow();
 
@@ -80,7 +80,9 @@ public class MainWindow extends AbstractWindow{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(new Stage(),630,540));
+        cryptoListWindow=new CryptoListWindow(new Stage(),typeCryptLabel);
+
+        windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(cryptoListWindow.getStage(),630,540));
         settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(new Stage(),457,235));
         openFileMenuItem.setOnAction(new MainModel.OpenFile(decryptedTextArea));
         openEncryptedFileMenuItem.setOnAction(new MainModel.OpenFile(encryptedTextArea));
@@ -94,6 +96,5 @@ public class MainWindow extends AbstractWindow{
         encryptButton.setOnAction(new MainModel.CryptOperation(decryptedTextArea.getText(),1));
         decryptButton.setOnAction(new MainModel.CryptOperation(encryptedTextArea.getText(),-1));
         generateKeyButton.setOnAction(new MainModel.GeneratorRandomKey());
-
     }
 }

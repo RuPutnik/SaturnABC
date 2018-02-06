@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import ru.putnik.saturn.models.CryptoListModel;
+import ru.putnik.saturn.models.MainModel;
 import ru.putnik.saturn.pojo.Crypt;
 
 import java.net.URL;
@@ -23,7 +24,8 @@ import java.util.ResourceBundle;
  */
 public class CryptoListWindow extends AbstractWindow{
     public static Stage cryptoListStage;
-    private CryptoListModel model=new CryptoListModel();
+    public static Label mainCryptLabel;
+    private CryptoListModel model;
     @FXML
     private TextArea infoCryptTextArea;
     @FXML
@@ -38,9 +40,10 @@ public class CryptoListWindow extends AbstractWindow{
     private Button connectModuleButton;
     @FXML
     private Button disconnectModuleButton;
-
-    public CryptoListWindow(){
-
+    public CryptoListWindow(){}
+    public CryptoListWindow(Stage stage,Label label){
+        cryptoListStage=stage;
+        mainCryptLabel=label;
     }
 
     @Override
@@ -56,9 +59,16 @@ public class CryptoListWindow extends AbstractWindow{
     @Override
     @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources) {
+        model=new CryptoListModel(selectedCryptLabel,infoCryptTextArea);
         model.prepareList();
+        model.setTempNameSelectedCrypt(MainModel.nameSelectedCrypt);
+        model.setTempNumberSelectedCrypt(MainModel.numberSelectedCrypt);
         listCryptsListView.setItems(model.getCryptsList());
 
-        listCryptsListView.getSelectionModel().selectedItemProperty().addListener(new CryptoListModel.SelectedTypeCrypt<Crypt>());
+        selectedCryptLabel.setText(MainModel.nameSelectedCrypt);
+
+        saveCryptButton.setOnAction(model.saveButton);
+        cancelButton.setOnAction(model.cancelButton);
+        listCryptsListView.getSelectionModel().selectedItemProperty().addListener(model.selectedTypeCrypt);
     }
 }
