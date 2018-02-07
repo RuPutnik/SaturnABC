@@ -11,6 +11,6 @@
     <padding>
         <Insets left="25" right="25"/>
     </padding>
-    <TextArea fx:id="infoArea" prefHeight="381.0" prefWidth="351.0"/>
+    <TextArea fx:id="infoArea" prefHeight="381.0" prefWidth="351.0" editable="false"/>
     <Button fx:id="exitButton" mnemonicParsing="false" text="Выход"/>
 </VBox>

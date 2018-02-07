@@ -36,6 +36,10 @@ public class SettingWindow extends AbstractWindow {
     private Button defaultButton;
     @FXML
     private Button cancelButton;
+    public SettingWindow(){}
+    public SettingWindow(Stage stage){
+        settingStage=stage;
+    }
 
     @Override
     public String getPathToLayout() {

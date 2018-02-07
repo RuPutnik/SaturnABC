@@ -63,12 +63,15 @@ public class CryptoListWindow extends AbstractWindow{
         model.prepareList();
         model.setTempNameSelectedCrypt(MainModel.nameSelectedCrypt);
         model.setTempNumberSelectedCrypt(MainModel.numberSelectedCrypt);
+        model.selectedCipherInfo(MainModel.numberSelectedCrypt);
         listCryptsListView.setItems(model.getCryptsList());
 
         selectedCryptLabel.setText(MainModel.nameSelectedCrypt);
 
         saveCryptButton.setOnAction(model.saveButton);
         cancelButton.setOnAction(model.cancelButton);
+        connectModuleButton.setOnAction(model.connectModuleButton);
+        disconnectModuleButton.setOnAction(model.disconnectModuleButton);
         listCryptsListView.getSelectionModel().selectedItemProperty().addListener(model.selectedTypeCrypt);
     }
 }
