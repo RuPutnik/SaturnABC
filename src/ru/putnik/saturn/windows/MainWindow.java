@@ -84,6 +84,8 @@ public class MainWindow extends AbstractWindow{
         settingWindow=new SettingWindow(new Stage());
         infoWindow=new InfoWindow(new Stage());
 
+        mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Главное окно");
+
         windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(cryptoListWindow.getStage(),630,540));
         settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(settingWindow.getStage(),457,235));
         openFileMenuItem.setOnAction(new MainModel.OpenFile(decryptedTextArea));

@@ -53,6 +53,7 @@ public class SettingWindow extends AbstractWindow {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        settingStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Настройки");
 
     }
 }

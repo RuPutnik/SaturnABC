@@ -42,6 +42,7 @@ public class CryptoListWindow extends AbstractWindow{
     private Button disconnectModuleButton;
     public CryptoListWindow(){}
     public CryptoListWindow(Stage stage,Label label){
+
         cryptoListStage=stage;
         mainCryptLabel=label;
     }
@@ -59,6 +60,7 @@ public class CryptoListWindow extends AbstractWindow{
     @Override
     @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources) {
+        cryptoListStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Выбор шифра");
         model=new CryptoListModel(selectedCryptLabel,infoCryptTextArea);
         model.prepareList();
         model.setTempNameSelectedCrypt(MainModel.nameSelectedCrypt);

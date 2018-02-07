@@ -37,6 +37,7 @@ public class InfoWindow extends AbstractWindow {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        infoStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Помощь");
         printHelpInfo();
         infoArea.positionCaret(0);
         exitButton.setOnAction(event ->close());

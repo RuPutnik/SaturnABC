@@ -19,8 +19,8 @@ public abstract class AbstractWindow extends Application implements PathToLayout
     @Override
     public void start(Stage stage) throws Exception {}
 
-    private static final String NAME_PROGRAM="SaturnABC";
-    private static final String VERSION_PROGRAM="version: 0.3";
+    public static final String NAME_PROGRAM="SaturnABC";
+    public static final String VERSION_PROGRAM="version: 0.31";
     private static final String LOGO_PATH="/ru/putnik/saturn/resources/images/iconSaturn.png";
     private static Stage stage;
     //Отрисовываем окно программы
@@ -35,7 +35,6 @@ public abstract class AbstractWindow extends Application implements PathToLayout
         }
         mainStage.setResizable(true);
         mainStage.setScene(new Scene(parent));
-        mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM);
         InputStream stream=getClass().getResourceAsStream(LOGO_PATH);
         //Проверка на наличие иконки программы
         if(stream!=null) {
