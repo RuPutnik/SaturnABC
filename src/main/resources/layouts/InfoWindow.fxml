@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="450.0" minWidth="400.0" spacing="10"
       xmlns="http://javafx.com/javafx/8.0.76-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.windows.InfoWindow">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.InfoController">
     <padding>
         <Insets left="25" right="25"/>
     </padding>

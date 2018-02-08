@@ -11,7 +11,7 @@ import javafx.scene.control.TextInputControl;
 public class MainModel {
     public static String nameSelectedCrypt="Не выбран";
     public static int numberSelectedCrypt=0;
-    //Обработчик, отвечающий за очистку левого(правого) окна или поля для ключа при нажатии на кнопку
+    //Обработчик событий, отвечающий за очистку левого(правого) окна или поля для ключа при нажатии на кнопку
     public static class CleanText<T extends TextInputControl> implements EventHandler<ActionEvent>{
         T textComponent;
         public CleanText(T textComponent){
@@ -22,6 +22,7 @@ public class MainModel {
             textComponent.clear();
         }
     }
+    //Обработчик событий нажатия на кнопки шифрации и дешифрации
     public static class CryptOperation implements EventHandler<ActionEvent>{
         String text;
         int direction;
@@ -35,6 +36,7 @@ public class MainModel {
 
         }
     }
+    //Обработчик событий нажатия на кнопку генерации случайного ключа
     public static class GeneratorRandomKey implements EventHandler<ActionEvent>{
 
         @Override
@@ -42,6 +44,7 @@ public class MainModel {
 
         }
     }
+    //Обработчик нажатия на пункт меню открытия файла
     public static class OpenFile implements EventHandler<ActionEvent>{
         TextArea area;
         public OpenFile(TextArea area){
@@ -52,6 +55,7 @@ public class MainModel {
 
         }
     }
+    //Обработчик нажатия на пункт меню сохранения файла
     public static class SaveFile implements EventHandler<ActionEvent>{
         TextArea area;
         public SaveFile(TextArea area){

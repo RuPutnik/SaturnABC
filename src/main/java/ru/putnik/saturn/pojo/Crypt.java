@@ -4,6 +4,7 @@ package ru.putnik.saturn.pojo;
  * Created by My Computer on 02.02.2018.
  */
 public class Crypt {
+    //Класс отвечает за структуризацию отдельного шифра при добавлении в ObservableList в классе CryptoListModel
     private String nameCrypt;
     private int numberCrypt;
 

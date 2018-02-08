@@ -1,4 +1,4 @@
-package ru.putnik.saturn.windows;
+package ru.putnik.saturn.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Created by My Computer on 30.01.2018.
  */
-public class SettingWindow extends AbstractWindow {
+public class SettingController extends AbstractController {
     public static Stage settingStage;
 
     @FXML
@@ -36,14 +36,14 @@ public class SettingWindow extends AbstractWindow {
     private Button defaultButton;
     @FXML
     private Button cancelButton;
-    public SettingWindow(){}
-    public SettingWindow(Stage stage){
+    public SettingController(){}
+    public SettingController(Stage stage){
         settingStage=stage;
     }
 
     @Override
     public String getPathToLayout() {
-        return "/ru/putnik/saturn/resources/layouts/SettingWindow.fxml";
+        return "layouts/SettingWindow.fxml";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.putnik.saturn.windows;
+package ru.putnik.saturn.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,11 +10,11 @@ import java.util.ResourceBundle;
 /**
  * Created by My Computer on 30.01.2018.
  */
-public class MainWindow extends AbstractWindow{
+public class MainController extends AbstractController {
     public static Stage mainStage;
-    private CryptoListWindow cryptoListWindow;
-    private SettingWindow settingWindow;
-    private InfoWindow infoWindow;
+    private CryptoListController cryptoListWindow;
+    private SettingController settingWindow;
+    private InfoController infoWindow;
 
     @FXML
     private MenuItem windowCryptsMenuItem;
@@ -66,7 +66,7 @@ public class MainWindow extends AbstractWindow{
 
     @Override
     public String getPathToLayout() {
-        return "/ru/putnik/saturn/resources/layouts/MainWindow.fxml";
+        return "layouts/MainWindow.fxml";
     }
 
     @Override
@@ -80,9 +80,9 @@ public class MainWindow extends AbstractWindow{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cryptoListWindow=new CryptoListWindow(new Stage(),typeCryptLabel);
-        settingWindow=new SettingWindow(new Stage());
-        infoWindow=new InfoWindow(new Stage());
+        cryptoListWindow=new CryptoListController(new Stage(),typeCryptLabel);
+        settingWindow=new SettingController(new Stage());
+        infoWindow=new InfoController(new Stage());
 
         mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Главное окно");
 
@@ -100,6 +100,7 @@ public class MainWindow extends AbstractWindow{
         encryptButton.setOnAction(new MainModel.CryptOperation(decryptedTextArea.getText(),1));
         decryptButton.setOnAction(new MainModel.CryptOperation(encryptedTextArea.getText(),-1));
         generateKeyButton.setOnAction(new MainModel.GeneratorRandomKey());
+        //Указываем слушателя события, происходящего при нажатии на крестик(закрытии главного окна программы)
         mainStage.setOnCloseRequest(event -> System.exit(0));
     }
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="520" minWidth="910" prefHeight="521.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.windows.MainWindow">
+<BorderPane minHeight="520" minWidth="910" prefHeight="521.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.MainController">
     <top>
         <VBox spacing="10">
         <MenuBar>

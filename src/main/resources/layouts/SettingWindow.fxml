@@ -9,7 +9,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.geometry.Insets?>
 <VBox alignment="center" prefHeight="200.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.windows.SettingWindow">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.SettingController">
     <HBox spacing="20">
         <VBox alignment="CENTER_LEFT" spacing="10">
             <padding>

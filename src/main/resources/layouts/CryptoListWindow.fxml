@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="520.0" prefWidth="614.0" spacing="30" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.windows.CryptoListWindow">
+<HBox prefHeight="520.0" prefWidth="614.0" spacing="30" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.CryptoListController">
     <padding>
         <Insets bottom="20" left="10" right="10" top="60" />
     </padding>

@@ -8,11 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
+import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.pojo.Crypt;
-import ru.putnik.saturn.windows.CryptoListWindow;
+import ru.putnik.saturn.controllers.CryptoListController;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -34,6 +35,7 @@ public class CryptoListModel {
         selectedCryptLabel=label;
         infoCryptTextArea=area;
     }
+    //Добавление существующих шифров в список
     public ObservableList<Crypt> prepareList(){
         cryptsList.add(new Crypt("Шифр Цезаря(Сдвиговый)",1));
         cryptsList.add(new Crypt("Шифр кодовым словом",2));
@@ -42,7 +44,7 @@ public class CryptoListModel {
         cryptsList.add(new Crypt("Шифр расширения словом",5));
         return cryptsList;
     }
-
+    //Определение файла справки для выбранного шифра по его номеру
     public void selectedCipherInfo(int numberCipher){
         switch (numberCipher){
             case 0:{
@@ -75,17 +77,22 @@ public class CryptoListModel {
             }
         }
     }
+    //Вывод справки о выбранном шифре
     public void printCipherInfo(String nameFile){
-        InputStreamReader streamReader=new InputStreamReader(getClass().getResourceAsStream("../resources/texts/textsCrypts/"+nameFile));
+        try {
+        String realPaths=getClass().getClassLoader().getResource("texts/textsCrypts/"+nameFile).getFile();
+        InputStreamReader streamReader=new InputStreamReader(new FileInputStream(realPaths));
         BufferedReader bufferedReader=new BufferedReader(streamReader);
         String infoLine;
         infoCryptTextArea.setText("");
-        try {
             while ((infoLine = bufferedReader.readLine())!= null) {
                 infoCryptTextArea.appendText(infoLine+"\n");
             }
         }catch (IOException ex){
             ex.printStackTrace();
+            CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки справки по шрифту",
+           "Информация о выбранном шрфите не была загружена. Возможно файл справки поврежден или не существует.",
+           false);
         }
     }
 
@@ -115,27 +122,29 @@ public class CryptoListModel {
             tempNameSelectedCrypt=newValue.getNameCrypt();
             tempNumberSelectedCrypt=newValue.getNumberCrypt();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
-            System.out.println(tempNumberSelectedCrypt);
             selectedCipherInfo(tempNumberSelectedCrypt);
         }
     }
+    //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label
     public class SaveButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
             MainModel.nameSelectedCrypt=tempNameSelectedCrypt;
             MainModel.numberSelectedCrypt=tempNumberSelectedCrypt;
-            CryptoListWindow.close();
-            CryptoListWindow.mainCryptLabel.setText("    Тип шифрования: "+MainModel.nameSelectedCrypt);
+            CryptoListController.close();
+            CryptoListController.mainCryptLabel.setText("    Тип шифрования: "+MainModel.nameSelectedCrypt);
         }
     }
+    //Обработчик события. Ничего не выбираем и не сохраняем, закрываем окно
     public class CancelButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
-            CryptoListWindow.close();
+            CryptoListController.close();
         }
     }
+    //Обработчик события нажатия на кнопку подключения внешнего модуля шифра
     public class ConnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
@@ -143,6 +152,7 @@ public class CryptoListModel {
 
         }
     }
+    //Обработчик события нажатия на кнопку отключения внешнего модуля шифра
     public class DisconnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
