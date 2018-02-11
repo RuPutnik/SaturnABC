@@ -15,6 +15,7 @@ public class MainController extends AbstractController {
     private CryptoListController cryptoListWindow;
     private SettingController settingWindow;
     private InfoController infoWindow;
+    private MainModel mainModel;
 
     @FXML
     private MenuItem windowCryptsMenuItem;
@@ -83,6 +84,7 @@ public class MainController extends AbstractController {
         cryptoListWindow=new CryptoListController(new Stage(),typeCryptLabel);
         settingWindow=new SettingController(new Stage());
         infoWindow=new InfoController(new Stage());
+        mainModel=new MainModel(decryptedTextArea,encryptedTextArea,keyTextField);
 
         mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Главное окно");
 
@@ -97,8 +99,8 @@ public class MainController extends AbstractController {
         clearLeftWindowButton.setOnAction(new MainModel.CleanText<>(decryptedTextArea));
         clearRightWindowButton.setOnAction(new MainModel.CleanText<>(encryptedTextArea));
         clearKeyFieldButton.setOnAction(new MainModel.CleanText<>(keyTextField));
-        encryptButton.setOnAction(new MainModel.CryptOperation(decryptedTextArea.getText(),1));
-        decryptButton.setOnAction(new MainModel.CryptOperation(encryptedTextArea.getText(),-1));
+        encryptButton.setOnAction(mainModel.getCryptoOperation(1));
+        decryptButton.setOnAction(mainModel.getCryptoOperation(-1));
         generateKeyButton.setOnAction(new MainModel.GeneratorRandomKey());
         //Указываем слушателя события, происходящего при нажатии на крестик(закрытии главного окна программы)
         mainStage.setOnCloseRequest(event -> System.exit(0));

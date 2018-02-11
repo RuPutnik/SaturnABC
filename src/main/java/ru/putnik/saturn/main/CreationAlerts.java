@@ -15,4 +15,15 @@ public class CreationAlerts {
             errorAlert.show();
         }
     }
+    public static void showWarningAlert(String title,String head,String content,boolean wait){
+        Alert errorAlert=new Alert(Alert.AlertType.WARNING);
+        errorAlert.setTitle(title);
+        errorAlert.setHeaderText(head);
+        errorAlert.setContentText(content);
+        if(wait){
+            errorAlert.showAndWait();
+        }else {
+            errorAlert.show();
+        }
+    }
 }
