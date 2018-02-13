@@ -59,7 +59,7 @@ public class CryptoListController extends AbstractController {
         //Записываем номер и имя уже выбранного шифра(При запуске программы шифр не выбран и его номер number=0)
         model.setTempNameSelectedCrypt(MainModel.nameSelectedCrypt);
         model.setTempNumberSelectedCrypt(MainModel.numberSelectedCrypt);
-        model.selectedCipherInfo(MainModel.numberSelectedCrypt);
+        model.printCipherInfo(model.getNameInfoFileForNumber(MainModel.numberSelectedCrypt));
         listCryptsListView.setItems(model.getCryptsList());
 
         //Записываем имя выбранного шифра на специальный виджет в окне

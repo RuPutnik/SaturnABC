@@ -37,15 +37,15 @@ public class CryptoListModel {
     }
     //Добавление существующих шифров в список
     public ObservableList<Crypt> prepareList(){
-        cryptsList.add(new Crypt("Шифр Цезаря(Сдвиговый)",1));
-        cryptsList.add(new Crypt("Шифр кодовым словом",2));
-        cryptsList.add(new Crypt("Шифр блочный",3));
-        cryptsList.add(new Crypt("Шифр Тритемиуса",4));
-        cryptsList.add(new Crypt("Шифр расширения словом",5));
+        cryptsList.add(new Crypt("Шифр Цезаря(Сдвиговый)",1,"caesarCipher.txt"));
+        cryptsList.add(new Crypt("Шифр кодовым словом",2,"codeWordCipher.txt"));
+        cryptsList.add(new Crypt("Шифр блочный",3,"blockCipher.txt"));
+        cryptsList.add(new Crypt("Шифр Тритемиуса",4,"tritemiusCipher.txt"));
+        cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
         return cryptsList;
     }
     //Определение файла справки для выбранного шифра по его номеру
-    public void selectedCipherInfo(int numberCipher){
+   /* public void selectedCipherInfo(int numberCipher){
         switch (numberCipher){
             case 0:{
                 infoCryptTextArea.setText("Для получения справки выберите шифр.");
@@ -76,7 +76,7 @@ public class CryptoListModel {
                 break;
             }
         }
-    }
+    }*/
     //Вывод справки о выбранном шифре
     public void printCipherInfo(String nameFile){
         try {
@@ -93,6 +93,18 @@ public class CryptoListModel {
             CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки справки по шрифту",
            "Информация о выбранном шрфите не была загружена. Возможно файл справки поврежден или не существует.",
            false);
+        }
+    }
+    //Возвращает имя файла помощи по номеру шифра
+    public String getNameInfoFileForNumber(int numberCipher){
+        if(numberCipher==0){
+            return "notSelected.txt";
+        }else {
+            for (int a = 0; a < cryptsList.size(); a++) {
+                if (cryptsList.get(a).getNumberCrypt() == numberCipher)
+                    return cryptsList.get(a).getNameInfoFile();
+            }
+            return "";
         }
     }
 
@@ -122,7 +134,8 @@ public class CryptoListModel {
             tempNameSelectedCrypt=newValue.getNameCrypt();
             tempNumberSelectedCrypt=newValue.getNumberCrypt();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
-            selectedCipherInfo(tempNumberSelectedCrypt);
+           // selectedCipherInfo(tempNumberSelectedCrypt);
+            printCipherInfo(newValue.getNameInfoFile());
         }
     }
     //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label
