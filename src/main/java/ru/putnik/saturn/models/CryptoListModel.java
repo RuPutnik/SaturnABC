@@ -44,39 +44,6 @@ public class CryptoListModel {
         cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
         return cryptsList;
     }
-    //Определение файла справки для выбранного шифра по его номеру
-   /* public void selectedCipherInfo(int numberCipher){
-        switch (numberCipher){
-            case 0:{
-                infoCryptTextArea.setText("Для получения справки выберите шифр.");
-                break;
-            }
-            case 1:{
-                printCipherInfo("caesarCipher.txt");
-                break;
-            }
-            case 2:{
-                printCipherInfo("codeWordCipher.txt");
-                break;
-            }
-            case 3:{
-                printCipherInfo("blockCipher.txt");
-                break;
-            }
-            case 4:{
-                printCipherInfo("tritemiusCipher.txt");
-                break;
-            }
-            case 5:{
-                printCipherInfo("extensionCipher.txt");
-                break;
-            }
-            default:{
-                infoCryptTextArea.setText("Ошибка выбора шифра! Данный шифр не существует\nили информационная справка о нём недоступна!");
-                break;
-            }
-        }
-    }*/
     //Вывод справки о выбранном шифре
     public void printCipherInfo(String nameFile){
         try {
