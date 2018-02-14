@@ -1,4 +1,4 @@
-package ru.putnik.saturn.main;
+package ru.putnik.saturn.ciphers;
 
 public class Ciphers {
     public String cryptCaesar(String text,String key,int direction){

@@ -5,8 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
-import ru.putnik.saturn.controllers.MainController;
-import ru.putnik.saturn.main.Ciphers;
+import ru.putnik.saturn.ciphers.Ciphers;
 import ru.putnik.saturn.main.CreationAlerts;
 
 /**
