@@ -1,6 +1,11 @@
 package ru.putnik.saturn.ciphers;
 
-public class Ciphers {
+public abstract class Ciphers {
+    protected String nameCipher;
+    protected String nameFileInfo;
+    public int numberCipher;
+
+    public abstract String crypt(String text,String key,int direction);
     public String cryptCaesar(String text,String key,int direction){
         StringBuilder resultText= new StringBuilder();
         int digitKey=Integer.parseInt(key);
@@ -17,4 +22,5 @@ public class Ciphers {
     private char cryptSymbol(char symbol,int key,int direction){
         return (char)((int)symbol+key*direction);
     }
+
 }
