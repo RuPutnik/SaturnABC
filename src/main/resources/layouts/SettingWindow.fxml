@@ -8,6 +8,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <VBox alignment="center" prefHeight="200.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.SettingController">
     <HBox spacing="20">

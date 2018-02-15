@@ -5,9 +5,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
-import ru.putnik.saturn.controllers.MainController;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ru.putnik.saturn.main.Ciphers;
 import ru.putnik.saturn.main.CreationAlerts;
+
+import java.io.*;
 
 /**
  * Created by My Computer on 31.01.2018.
@@ -19,6 +22,7 @@ public class MainModel {
     private TextArea decryptTextArea;
     private TextArea encryptTextArea;
     private TextField keyField;
+
     public MainModel(TextArea decryptTextArea,TextArea encryptTextArea,TextField keyField){
         this.decryptTextArea=decryptTextArea;
         this.encryptTextArea=encryptTextArea;
@@ -29,7 +33,15 @@ public class MainModel {
         return new CryptOperation(direction);
     }
 
-    private String decrypt(int numberCipher,String text,String key){
+    public OpenFile getOpenFile(TextArea area) {
+        return new OpenFile(area);
+    }
+
+    public SaveFile getSaveFile(TextArea area){
+        return new SaveFile(area);
+    }
+
+    private String decrypt(int numberCipher, String text, String key){
         String decryptedText="";
             switch (numberCipher) {
                 case 0: {
@@ -52,7 +64,9 @@ public class MainModel {
                     break;
                 }
                 case 4: {
-
+                    if(checkCaesarKey(key)) {
+                        return ciphers.cryptTryt(text, key, -1);
+                    }
                     break;
                 }
                 case 5: {
@@ -86,7 +100,9 @@ public class MainModel {
                 break;
             }
             case 4: {
-
+                if(checkCaesarKey(key)) {
+                    return ciphers.cryptTryt(text, key, 1);
+                }
                 break;
             }
             case 5: {
@@ -102,7 +118,7 @@ public class MainModel {
            return false;
         }
         try {
-            int testingKey=Integer.parseInt(key);
+            Integer.parseInt(key);
             return true;
         }catch (NumberFormatException e){
             e.printStackTrace();
@@ -110,6 +126,55 @@ public class MainModel {
             return false;
         }
     }
+    //Используем стандартную компоненту для выбора текстового файла
+    private File openFile(){
+        FileChooser chooser=new FileChooser();
+        chooser.setInitialDirectory(new File("C:\\"));
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"),
+                new FileChooser.ExtensionFilter("TXT","*.txt"));
+        return chooser.showOpenDialog(new Stage());
+    }
+    //Читаем текст из файла и загружаем его в TextArea
+    private void fillTextAreaForAFile(TextArea fillingArea,File textFile){
+        try {
+            //Кодировку можно сделать выбираемой
+            BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(textFile),"UTF-8"));
+            String line;
+            fillingArea.setText("");
+            while ((line=bufferedReader.readLine())!=null){
+                fillingArea.appendText(line+"\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            CreationAlerts.showErrorAlert("Ошибка","Ошибка чтения файла","Выбранный файл не существует или недоступен",false);
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+            CreationAlerts.showErrorAlert("Ошибка","Ошибка чтения файла","Ошибка чтения выбранного файла",false);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+    }
+    //Выбираем файл, в который будем сохранять текст и(или) создаем этот файл
+    private File chooseFileForSave(){
+        FileChooser chooser=new FileChooser();
+        chooser.setInitialDirectory(new File("C:\\"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT","*.txt"));
+        return chooser.showSaveDialog(new Stage());
+    }
+    //Сохраняем текст из TextArea в выбранный ранее файл
+    private void saveFile(TextArea textArea,File textFile){
+        if(textFile!=null) {
+            try {
+                FileWriter writer = new FileWriter(textFile);
+                writer.write(textArea.getText());
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     //Обработчик событий, отвечающий за очистку левого(правого) окна или поля для ключа при нажатии на кнопку
     public static class CleanText<T extends TextInputControl> implements EventHandler<ActionEvent>{
@@ -147,25 +212,27 @@ public class MainModel {
         }
     }
     //Обработчик нажатия на пункт меню открытия файла
-    public static class OpenFile implements EventHandler<ActionEvent>{
+    public class OpenFile implements EventHandler<ActionEvent>{
         TextArea area;
-        public OpenFile(TextArea area){
+        OpenFile(TextArea area){
             this.area=area;
         }
         @Override
         public void handle(ActionEvent event) {
-
+            File openedFile=openFile();
+            fillTextAreaForAFile(area,openedFile);
         }
     }
     //Обработчик нажатия на пункт меню сохранения файла
-    public static class SaveFile implements EventHandler<ActionEvent>{
+    public class SaveFile implements EventHandler<ActionEvent>{
         TextArea area;
-        public SaveFile(TextArea area){
+        SaveFile(TextArea area){
             this.area=area;
         }
         @Override
         public void handle(ActionEvent event) {
-
+            File savedFile=chooseFileForSave();
+            saveFile(area,savedFile);
         }
     }
 }

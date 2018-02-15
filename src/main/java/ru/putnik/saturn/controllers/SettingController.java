@@ -1,10 +1,7 @@
 package ru.putnik.saturn.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -15,6 +12,8 @@ import java.util.ResourceBundle;
  */
 public class SettingController extends AbstractController {
     public static Stage settingStage;
+    private ToggleGroup loggingGroup=new ToggleGroup();
+    private ToggleGroup cryptSpacingGroup=new ToggleGroup();
 
     @FXML
     private Label addressTableLabel;
@@ -54,6 +53,13 @@ public class SettingController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         settingStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Настройки");
+        onLoggingRButton.setToggleGroup(loggingGroup);
+        offLoggingRButton.setToggleGroup(loggingGroup);
+        onCryptSpacingRButton.setToggleGroup(cryptSpacingGroup);
+        offCryptSpacingRButton.setToggleGroup(cryptSpacingGroup);
+
+        offLoggingRButton.setSelected(true);
+        onCryptSpacingRButton.setSelected(true);
 
     }
 }
