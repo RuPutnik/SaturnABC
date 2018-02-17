@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 //Данный класс используется для сериализации настроек
 public class Settings implements Serializable {
-    boolean logging;
-    boolean cryptoSpacing;
-    boolean playerTableIndexs;
-    String pathToPlayerTable;
+    private boolean logging;
+    private boolean cryptoSpacing;
+    private boolean playerTableIndex;
+    private String pathToPlayerTable;
 
     public boolean isLogging() {
         return logging;
@@ -18,7 +18,7 @@ public class Settings implements Serializable {
     }
 
     public boolean isPlayerTableIndexs() {
-        return playerTableIndexs;
+        return playerTableIndex;
     }
 
     public String getPathToPlayerTable() {
@@ -33,8 +33,8 @@ public class Settings implements Serializable {
         this.cryptoSpacing = cryptoSpacing;
     }
 
-    public void setPlayerTableIndexs(boolean playerTableIndexs) {
-        this.playerTableIndexs = playerTableIndexs;
+    public void setPlayerTableIndex(boolean playerTableIndex) {
+        this.playerTableIndex = playerTableIndex;
     }
 
     public void setPathToPlayerTable(String pathToPlayerTable) {

@@ -3,6 +3,8 @@ package ru.putnik.saturn.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import ru.putnik.saturn.models.SettingModel;
+import ru.putnik.saturn.pojo.Settings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,6 +13,7 @@ import java.util.ResourceBundle;
  * Created by My Computer on 30.01.2018.
  */
 public class SettingController extends AbstractController {
+    private SettingModel model;
     public static Stage settingStage;
     private ToggleGroup loggingGroup=new ToggleGroup();
     private ToggleGroup cryptSpacingGroup=new ToggleGroup();
@@ -50,8 +53,36 @@ public class SettingController extends AbstractController {
         return settingStage;
     }
 
+    //Если какая-либо кнопка или виджет были нажаты и это сохранилось в настройках, то устанавливаем нужные квиджеты в нажатое состояние
+    private void useGraphicPartOfSettings(Settings settings){
+        if (settings!=null) {
+            if (settings.isPlayerTableIndexs()) {
+                actionPlayerTableCheckBox.setSelected(true);
+            } else {
+                actionPlayerTableCheckBox.setSelected(false);
+            }
+            if (settings.isCryptoSpacing()) {
+                onCryptSpacingRButton.setSelected(true);
+                offCryptSpacingRButton.setSelected(false);
+            } else {
+                onCryptSpacingRButton.setSelected(false);
+                offCryptSpacingRButton.setSelected(true);
+            }
+            if (settings.isLogging()) {
+                onLoggingRButton.setSelected(true);
+                offLoggingRButton.setSelected(false);
+            } else {
+                onLoggingRButton.setSelected(false);
+                offLoggingRButton.setSelected(true);
+            }
+            addressTableLabel.setText("Адрес таблицы: "+settings.getPathToPlayerTable());
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        model=new SettingModel();
+
         settingStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Настройки");
         onLoggingRButton.setToggleGroup(loggingGroup);
         offLoggingRButton.setToggleGroup(loggingGroup);
@@ -61,5 +92,18 @@ public class SettingController extends AbstractController {
         offLoggingRButton.setSelected(true);
         onCryptSpacingRButton.setSelected(true);
 
+        useGraphicPartOfSettings(model.getSettingsProgram());
+
+        onLoggingRButton.setOnAction(model.getOnLoggingAction());
+        offLoggingRButton.setOnAction(model.getOffLoggingAction());
+        onCryptSpacingRButton.setOnAction(model.getOnCryptSpacing());
+        offCryptSpacingRButton.setOnAction(model.getOffCryptSpacing());
+        actionPlayerTableCheckBox.setOnAction(model.getPlayerTableAction());
+        findFileButton.setOnAction(model.getFindFile(addressTableLabel));
+        saveButton.setOnAction(model.getSaveSettings());
+        defaultButton.setOnAction(runnable->{
+            useGraphicPartOfSettings(model.installDefaultSettings());
+        });
+        cancelButton.setOnAction(runnable->settingStage.close());
     }
 }

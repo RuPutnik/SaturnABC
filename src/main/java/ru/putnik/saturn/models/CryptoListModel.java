@@ -95,18 +95,17 @@ public class CryptoListModel {
         this.tempNumberSelectedCrypt = numberSelectedCrypt;
     }
 
-    public class SelectedTypeCrypt implements ChangeListener<Crypt>{
+    private class SelectedTypeCrypt implements ChangeListener<Crypt>{
         @Override
         public void changed(ObservableValue<? extends Crypt> observable, Crypt oldValue, Crypt newValue) {
             tempNameSelectedCrypt=newValue.getNameCrypt();
             tempNumberSelectedCrypt=newValue.getNumberCrypt();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
-           // selectedCipherInfo(tempNumberSelectedCrypt);
             printCipherInfo(newValue.getNameInfoFile());
         }
     }
     //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label
-    public class SaveButton implements EventHandler<ActionEvent>{
+    private class SaveButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -117,7 +116,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события. Ничего не выбираем и не сохраняем, закрываем окно
-    public class CancelButton implements EventHandler<ActionEvent>{
+    private class CancelButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -125,7 +124,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события нажатия на кнопку подключения внешнего модуля шифра
-    public class ConnectModuleButton implements EventHandler<ActionEvent>{
+    private class ConnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -133,7 +132,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события нажатия на кнопку отключения внешнего модуля шифра
-    public class DisconnectModuleButton implements EventHandler<ActionEvent>{
+    private class DisconnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {

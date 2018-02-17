@@ -56,7 +56,9 @@ public class MainModel {
                     break;
                 }
                 case 2: {
-
+                    if(checkCodeWord(key)){
+                        return ciphers.cryptCodeWord(text,key,-1);
+                    }
                     break;
                 }
                 case 3: {
@@ -92,7 +94,9 @@ public class MainModel {
                 break;
             }
             case 2: {
-
+                if(checkCodeWord(key)){
+                    return ciphers.cryptCodeWord(text,key,1);
+                }
                 break;
             }
             case 3: {
@@ -111,6 +115,13 @@ public class MainModel {
             }
         }
         return encryptedText;
+    }
+    private boolean checkCodeWord(String key){
+        if(key==null||key.equals("")){
+            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
+            return false;
+        }else
+            return true;
     }
     private boolean checkCaesarKey(String key){
         if(key==null||key.equals("")){
@@ -188,7 +199,7 @@ public class MainModel {
         }
     }
     //Обработчик событий нажатия на кнопки шифрации и дешифрации
-    public class CryptOperation implements EventHandler<ActionEvent>{
+    private class CryptOperation implements EventHandler<ActionEvent>{
         int direction;
         CryptOperation(int directionCrypt){
             this.direction=directionCrypt;
@@ -212,7 +223,7 @@ public class MainModel {
         }
     }
     //Обработчик нажатия на пункт меню открытия файла
-    public class OpenFile implements EventHandler<ActionEvent>{
+    private class OpenFile implements EventHandler<ActionEvent>{
         TextArea area;
         OpenFile(TextArea area){
             this.area=area;
@@ -224,7 +235,7 @@ public class MainModel {
         }
     }
     //Обработчик нажатия на пункт меню сохранения файла
-    public class SaveFile implements EventHandler<ActionEvent>{
+    private class SaveFile implements EventHandler<ActionEvent>{
         TextArea area;
         SaveFile(TextArea area){
             this.area=area;
