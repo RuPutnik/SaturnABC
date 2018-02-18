@@ -8,8 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import ru.putnik.saturn.ciphers.CaesarCipher;
+import ru.putnik.saturn.ciphers.Cipher;
 import ru.putnik.saturn.main.CreationAlerts;
-import ru.putnik.saturn.pojo.Crypt;
 import ru.putnik.saturn.controllers.CryptoListController;
 
 import java.io.BufferedReader;
@@ -21,12 +22,13 @@ import java.io.InputStreamReader;
  * Created by My Computer on 02.02.2018.
  */
 public class CryptoListModel {
+    public static ObservableList<Cipher> cryptsList;
     public SaveButton saveButton=new SaveButton();
     public CancelButton cancelButton=new CancelButton();
     public ConnectModuleButton connectModuleButton=new ConnectModuleButton();
     public DisconnectModuleButton disconnectModuleButton=new DisconnectModuleButton();
     public SelectedTypeCrypt selectedTypeCrypt=new SelectedTypeCrypt();
-    private ObservableList<Crypt> cryptsList=FXCollections.observableArrayList();
+
     private String tempNameSelectedCrypt;
     private int tempNumberSelectedCrypt;
     private Label selectedCryptLabel;
@@ -36,12 +38,13 @@ public class CryptoListModel {
         infoCryptTextArea=area;
     }
     //Добавление существующих шифров в список
-    public ObservableList<Crypt> prepareList(){
-        cryptsList.add(new Crypt("Шифр Цезаря(Сдвиговый)",1,"caesarCipher.txt"));
-        cryptsList.add(new Crypt("Шифр кодовым словом",2,"codeWordCipher.txt"));
-        cryptsList.add(new Crypt("Шифр блочный",3,"blockCipher.txt"));
-        cryptsList.add(new Crypt("Шифр Тритемиуса",4,"tritemiusCipher.txt"));
-        cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
+    public ObservableList<Cipher> prepareList(){
+        cryptsList=FXCollections.observableArrayList();
+        cryptsList.add(new CaesarCipher(1));
+      //  cryptsList.add(new Crypt("Шифр кодовым словом",2,"codeWordCipher.txt"));
+      //  cryptsList.add(new Crypt("Шифр блочный",3,"blockCipher.txt"));
+       // cryptsList.add(new Crypt("Шифр Тритемиуса",4,"tritemiusCipher.txt"));
+       // cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
         return cryptsList;
     }
     //Вывод справки о выбранном шифре
@@ -68,14 +71,14 @@ public class CryptoListModel {
             return "notSelected.txt";
         }else {
             for (int a = 0; a < cryptsList.size(); a++) {
-                if (cryptsList.get(a).getNumberCrypt() == numberCipher)
-                    return cryptsList.get(a).getNameInfoFile();
+                if (cryptsList.get(a).numberCipher == numberCipher)
+                    return cryptsList.get(a).nameFileInfo;
             }
             return "";
         }
     }
 
-    public ObservableList<Crypt> getCryptsList() {
+    public ObservableList<Cipher> getCryptsList() {
         return cryptsList;
     }
 
@@ -95,14 +98,14 @@ public class CryptoListModel {
         this.tempNumberSelectedCrypt = numberSelectedCrypt;
     }
 
-    public class SelectedTypeCrypt implements ChangeListener<Crypt>{
+    public class SelectedTypeCrypt implements ChangeListener<Cipher>{
         @Override
-        public void changed(ObservableValue<? extends Crypt> observable, Crypt oldValue, Crypt newValue) {
-            tempNameSelectedCrypt=newValue.getNameCrypt();
-            tempNumberSelectedCrypt=newValue.getNumberCrypt();
+        public void changed(ObservableValue<? extends Cipher> observable, Cipher oldValue, Cipher newValue) {
+            tempNameSelectedCrypt=newValue.getNameCipher();
+            tempNumberSelectedCrypt=newValue.getNumberCipher();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
            // selectedCipherInfo(tempNumberSelectedCrypt);
-            printCipherInfo(newValue.getNameInfoFile());
+            printCipherInfo(newValue.getNameFileInfo());
         }
     }
     //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label
