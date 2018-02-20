@@ -101,7 +101,7 @@ public class MainController extends AbstractController {
         clearKeyFieldButton.setOnAction(new MainModel.CleanText<>(keyTextField));
         encryptButton.setOnAction(mainModel.getCryptoOperation(1));
         decryptButton.setOnAction(mainModel.getCryptoOperation(-1));
-        generateKeyButton.setOnAction(new MainModel.GeneratorRandomKey());
+        generateKeyButton.setOnAction(mainModel.getGeneratorKey());
         //Указываем слушателя события, происходящего при нажатии на крестик(закрытии главного окна программы)
         mainStage.setOnCloseRequest(event -> System.exit(0));
     }

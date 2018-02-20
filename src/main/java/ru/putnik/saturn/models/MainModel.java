@@ -32,6 +32,10 @@ public class MainModel {
         return new CryptOperation(direction);
     }
 
+    public GeneratorRandomKey getGeneratorKey(){
+        return new GeneratorRandomKey();
+    }
+
     private String decrypt(int numberCipher,String text,String key){
         String decryptedText;
         decryptedText=CryptoListModel.cryptsList.get(numberCipher-1).crypt(text,key,-1);
@@ -158,11 +162,10 @@ public class MainModel {
         }
     }
     //Обработчик событий нажатия на кнопку генерации случайного ключа
-    public static class GeneratorRandomKey implements EventHandler<ActionEvent>{
-
+    public class GeneratorRandomKey implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
-
+            keyField.setText(CryptoListModel.cryptsList.get(numberSelectedCrypt).generateKey());
         }
     }
     //Обработчик нажатия на пункт меню открытия файла
