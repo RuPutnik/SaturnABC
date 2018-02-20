@@ -5,6 +5,10 @@ public abstract class Cipher {
     public String nameFileInfo;
     public int numberCipher;
 
+    public Cipher(int numberCipher){
+        this.numberCipher=numberCipher;
+    }
+
     public abstract String crypt(String text,String key,int direction);
     public abstract boolean checkKey(String key);
     public abstract String generateKey();

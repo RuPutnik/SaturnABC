@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import ru.putnik.saturn.ciphers.CaesarCipher;
 import ru.putnik.saturn.ciphers.Cipher;
+import ru.putnik.saturn.ciphers.CodeWordCipher;
+import ru.putnik.saturn.ciphers.TrytCipher;
 import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.controllers.CryptoListController;
 
@@ -41,9 +43,9 @@ public class CryptoListModel {
     public ObservableList<Cipher> prepareList(){
         cryptsList=FXCollections.observableArrayList();
         cryptsList.add(new CaesarCipher(1));
-      //  cryptsList.add(new Crypt("Шифр кодовым словом",2,"codeWordCipher.txt"));
+        cryptsList.add(new CodeWordCipher(2));
       //  cryptsList.add(new Crypt("Шифр блочный",3,"blockCipher.txt"));
-       // cryptsList.add(new Crypt("Шифр Тритемиуса",4,"tritemiusCipher.txt"));
+        cryptsList.add(new TrytCipher(4));
        // cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
         return cryptsList;
     }
@@ -98,18 +100,21 @@ public class CryptoListModel {
         this.tempNumberSelectedCrypt = numberSelectedCrypt;
     }
 
+
     public class SelectedTypeCrypt implements ChangeListener<Cipher>{
         @Override
         public void changed(ObservableValue<? extends Cipher> observable, Cipher oldValue, Cipher newValue) {
             tempNameSelectedCrypt=newValue.getNameCipher();
             tempNumberSelectedCrypt=newValue.getNumberCipher();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
+
            // selectedCipherInfo(tempNumberSelectedCrypt);
             printCipherInfo(newValue.getNameFileInfo());
+
         }
     }
     //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label
-    public class SaveButton implements EventHandler<ActionEvent>{
+    private class SaveButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -120,7 +125,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события. Ничего не выбираем и не сохраняем, закрываем окно
-    public class CancelButton implements EventHandler<ActionEvent>{
+    private class CancelButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -128,7 +133,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события нажатия на кнопку подключения внешнего модуля шифра
-    public class ConnectModuleButton implements EventHandler<ActionEvent>{
+    private class ConnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {
@@ -136,7 +141,7 @@ public class CryptoListModel {
         }
     }
     //Обработчик события нажатия на кнопку отключения внешнего модуля шифра
-    public class DisconnectModuleButton implements EventHandler<ActionEvent>{
+    private class DisconnectModuleButton implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent event) {

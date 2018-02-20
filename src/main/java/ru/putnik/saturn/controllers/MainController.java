@@ -90,10 +90,10 @@ public class MainController extends AbstractController {
 
         windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(cryptoListWindow.getStage(),630,540));
         settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(settingWindow.getStage(),457,235));
-        openFileMenuItem.setOnAction(new MainModel.OpenFile(decryptedTextArea));
-        openEncryptedFileMenuItem.setOnAction(new MainModel.OpenFile(encryptedTextArea));
-        saveFileMenuItem.setOnAction(new MainModel.SaveFile(decryptedTextArea));
-        saveEncryptedFileMenuItem.setOnAction(new MainModel.SaveFile(encryptedTextArea));
+        openFileMenuItem.setOnAction(mainModel.getOpenFile(decryptedTextArea));
+        openEncryptedFileMenuItem.setOnAction(mainModel.getOpenFile(encryptedTextArea));
+        saveFileMenuItem.setOnAction(mainModel.getSaveFile(decryptedTextArea));
+        saveEncryptedFileMenuItem.setOnAction(mainModel.getSaveFile(encryptedTextArea));
         infoMenuItem.setOnAction(event -> infoWindow.renderWindow(infoWindow.getStage(),425,490));
         exitMenuItem.setOnAction(event -> System.exit(0));
         clearLeftWindowButton.setOnAction(new MainModel.CleanText<>(decryptedTextArea));

@@ -4,7 +4,7 @@ import ru.putnik.saturn.main.CreationAlerts;
 
 public class CaesarCipher extends Cipher {
     public CaesarCipher(int numberCipher){
-      this.numberCipher=numberCipher;
+        super(numberCipher);
       nameCipher="Шифр Цезаря(Сдвиговый)";
       nameFileInfo="caesarCipher.txt";
     }
