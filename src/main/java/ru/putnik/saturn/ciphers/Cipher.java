@@ -16,15 +16,12 @@ public abstract class Cipher {
     protected char cryptSymbol(char symbol,int key,int direction){
         return (char)((int)symbol+key*direction);
     }
-
     public String getNameCipher() {
         return nameCipher;
     }
-
     public String getNameFileInfo() {
         return nameFileInfo;
     }
-
     public int getNumberCipher() {
         return numberCipher;
     }
