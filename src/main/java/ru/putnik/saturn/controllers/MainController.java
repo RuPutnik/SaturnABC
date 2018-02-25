@@ -89,7 +89,7 @@ public class MainController extends AbstractController {
         mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Главное окно");
 
         windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(cryptoListWindow.getStage(),630,540));
-        settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(settingWindow.getStage(),457,235));
+        settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(settingWindow.getStage(),463,235));
         openFileMenuItem.setOnAction(mainModel.getOpenFile(decryptedTextArea));
         openEncryptedFileMenuItem.setOnAction(mainModel.getOpenFile(encryptedTextArea));
         saveFileMenuItem.setOnAction(mainModel.getSaveFile(decryptedTextArea));

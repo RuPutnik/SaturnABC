@@ -1,5 +1,7 @@
 package ru.putnik.saturn.ciphers;
 
+import ru.putnik.saturn.main.CreationAlerts;
+
 public class TrytCipher extends Cipher {
     public TrytCipher(int numberCipher){
         super(numberCipher);
@@ -13,7 +15,7 @@ public class TrytCipher extends Cipher {
         int b=0;
         int c=0;
 
-        for (int a=0;a<text.length()-1;a++){
+        for (int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
                 a++;
@@ -30,7 +32,18 @@ public class TrytCipher extends Cipher {
 
     @Override
     public boolean checkKey(String key) {
-        return false;
+        if(key==null||key.equals("")){
+            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
+            return false;
+        }
+        try {
+            Integer.parseInt(key);
+            return true;
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Используемый ключ содержит недопустимые символы для данного шифра!",false);
+            return false;
+        }
     }
 
     @Override

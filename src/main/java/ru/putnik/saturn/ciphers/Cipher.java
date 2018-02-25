@@ -1,20 +1,44 @@
 package ru.putnik.saturn.ciphers;
 
+import ru.putnik.saturn.main.PlayerIndexTable;
+import ru.putnik.saturn.models.SettingModel;
+import ru.putnik.saturn.pojo.Settings;
+import ru.putnik.saturn.serialization.SerializationMachine;
+
+import java.io.File;
+
 public abstract class Cipher {
+    private Settings settings=SerializationMachine.deserializationSettings(new File(SettingModel.PATH_TO_FILE_SETTINGS));
+    private PlayerIndexTable table = PlayerIndexTable.INSTANCE;
+
     public String nameCipher;
     public String nameFileInfo;
     public int numberCipher;
 
-    public Cipher(int numberCipher){
+    Cipher(int numberCipher){
         this.numberCipher=numberCipher;
     }
+
+    Cipher() {}
 
     public abstract String crypt(String text,String key,int direction);
     public abstract boolean checkKey(String key);
     public abstract String generateKey();
 
-    protected char cryptSymbol(char symbol,int key,int direction){
-        return (char)((int)symbol+key*direction);
+    char cryptSymbol(char symbol, int key, int direction){
+        if(settings.isPlayerTableIndexs()) {
+            if (symbol == ' ' && !settings.isCryptoSpacing()) {
+                return symbol;
+            } else {
+                return table.getSymbolForIndex(table.getIndexForSymbol(symbol)+(key*direction));
+            }
+        }else {
+            if (symbol == ' ' && !settings.isCryptoSpacing()) {
+                return symbol;
+            } else {
+                return (char) ((int) symbol + key * direction);
+            }
+        }
     }
     public String getNameCipher() {
         return nameCipher;

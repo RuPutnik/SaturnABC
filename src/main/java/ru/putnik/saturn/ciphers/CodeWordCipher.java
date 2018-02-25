@@ -1,16 +1,19 @@
 package ru.putnik.saturn.ciphers;
 
+import ru.putnik.saturn.main.CreationAlerts;
+
 public class CodeWordCipher extends Cipher {
     public CodeWordCipher(int numberCipher){
         super(numberCipher);
         nameCipher="Шифр кодовым словом";
         nameFileInfo="codeWordCipher.txt";
     }
+    public CodeWordCipher(){}
     @Override
     public String crypt(String text, String key, int direction) {
         StringBuilder resultText= new StringBuilder();
         int j=0;
-        for(int a=0;a<text.length()-1;a++){
+        for(int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
                 a++;
@@ -25,7 +28,11 @@ public class CodeWordCipher extends Cipher {
 
     @Override
     public boolean checkKey(String key) {
-        return false;
+        if(key==null||key.equals("")){
+            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
+            return false;
+        }else
+            return true;
     }
 
     @Override

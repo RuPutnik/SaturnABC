@@ -4,12 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.putnik.saturn.controllers.SettingController;
 import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.pojo.DefaultSettings;
 import ru.putnik.saturn.pojo.Settings;
+import ru.putnik.saturn.serialization.SerializationMachine;
 
 import java.io.*;
 
@@ -18,12 +20,12 @@ import java.io.*;
  */
 public class SettingModel {
     private Settings settingsProgram=new Settings();
-    private static final String PATH_TO_FILE_SETTINGS="C:\\SaturnABC\\settings.st";
+    public static final String PATH_TO_FILE_SETTINGS="C:\\SaturnABC\\settings.st";
     private static final String PATH_TO_DIRECTORY_SETTINGS="C:\\SaturnABC\\";
 
     public SettingModel(){
         createDirectorySettings();
-        Settings settings=deserializationSettings(new File(PATH_TO_FILE_SETTINGS));
+        Settings settings=SerializationMachine.deserializationSettings(new File(PATH_TO_FILE_SETTINGS));
         if(settings!=null) {
             settingsProgram.setPlayerTableIndex(settings.isPlayerTableIndexs());
             settingsProgram.setPathToPlayerTable(settings.getPathToPlayerTable());
@@ -52,41 +54,14 @@ public class SettingModel {
     public PlayerTableAction getPlayerTableAction(){
         return new PlayerTableAction();
     }
-    public FindFile getFindFile(Label pathLabel){
+    public FindFile getFindFile(TextField pathLabel){
         return new FindFile(pathLabel);
     }
     public SaveSettings getSaveSettings(){
         return new SaveSettings();
     }
     //Сериализация настроек
-    public void serializationSettings(Settings settings,String pathSettingFile){
-        try(ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(pathSettingFile))) {
-            oos.writeObject(settings);
-            oos.flush();
-            oos.close();
-        } catch (IOException e){
-            CreationAlerts.showErrorAlert("Ошибка","Ошибка сохранения настроек",
-                    "При сохранении настроек приложения возникла ошибка!",false);
-            e.printStackTrace();
-        }
-    }
-    //Десериализация настроек
-    public Settings deserializationSettings(File fileSettings){
-        Settings settings=null;
-        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(fileSettings))){
-            settings=(Settings)ois.readObject();
-            ois.close();
-        } catch (IOException e) {
-            CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки натроек",
-                    "При загрузке настроек приложения возникла ошибка! Возможно файл поврежден.",false);
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            CreationAlerts.showWarningAlert("Ошибка","Ошибка загрузки натроек",
-                    "При загрузке настроек приложения возникла ошибка! Возможно файл не существует. Будут использоваться стандартные настройки.",false);
-            e.printStackTrace();
-        }
-        return settings;
-    }
+
     //Создание папки настроек при ее отсутствии
     private void createDirectorySettings(){
         File settingsDirection=new File(PATH_TO_DIRECTORY_SETTINGS);
@@ -143,9 +118,9 @@ public class SettingModel {
 
     //Обработчик нажатия на кнопку поиска файла пользовательской таблицы индексов
     private class FindFile implements EventHandler<ActionEvent>{
-        Label pathLabel;
-        FindFile(Label pathLabel){
-            this.pathLabel=pathLabel;
+        TextField pathField;
+        FindFile(TextField pathField){
+            this.pathField=pathField;
         }
 
         @Override
@@ -156,11 +131,12 @@ public class SettingModel {
             try {
                 File playerTable = fileChooser.showOpenDialog(new Stage());
                 settingsProgram.setPathToPlayerTable(playerTable.getAbsolutePath());
-                pathLabel.setText(playerTable.getAbsolutePath());
+                pathField.setText(playerTable.getAbsolutePath());
+
             }catch (NullPointerException e){
                 e.printStackTrace();
                 settingsProgram.setPathToPlayerTable("");
-                pathLabel.setText("");
+                pathField.setText("");
             }
         }
     }
@@ -170,7 +146,7 @@ public class SettingModel {
         @Override
         public void handle(ActionEvent event) {
             createDirectorySettings();
-            serializationSettings(settingsProgram,PATH_TO_FILE_SETTINGS);
+            SerializationMachine.serializationSettings(settingsProgram,PATH_TO_FILE_SETTINGS);
             SettingController.close();
         }
     }

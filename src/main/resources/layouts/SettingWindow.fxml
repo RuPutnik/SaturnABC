@@ -8,8 +8,8 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Group?>
-<VBox alignment="center" prefHeight="200.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
+<?import javafx.scene.control.TextField?>
+<VBox alignment="center" prefHeight="200.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.putnik.saturn.controllers.SettingController">
     <HBox spacing="20">
         <VBox alignment="CENTER_LEFT" spacing="10">
@@ -19,7 +19,10 @@
             <Label text="Логгирование"/>
             <Label text="Шифрование пробела"/>
             <Label text="Пользовательская таблица индексов"/>
-            <Label fx:id="addressTableLabel" text="Адрес таблицы: "/>
+            <HBox>
+                <Label text="Адрес таблицы: "/>
+                <TextField fx:id="addressTableField" />
+            </HBox>
         </VBox>
         <VBox alignment="CENTER" spacing="10">
             <HBox spacing="10">

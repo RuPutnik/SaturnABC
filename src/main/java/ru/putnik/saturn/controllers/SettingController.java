@@ -19,7 +19,7 @@ public class SettingController extends AbstractController {
     private ToggleGroup cryptSpacingGroup=new ToggleGroup();
 
     @FXML
-    private Label addressTableLabel;
+    private TextField addressTableField;
     @FXML
     private RadioButton onLoggingRButton;
     @FXML
@@ -75,7 +75,8 @@ public class SettingController extends AbstractController {
                 onLoggingRButton.setSelected(false);
                 offLoggingRButton.setSelected(true);
             }
-            addressTableLabel.setText("Адрес таблицы: "+settings.getPathToPlayerTable());
+            addressTableField.setText(settings.getPathToPlayerTable());
+            addressTableField.setFocusTraversable(false);
         }
     }
 
@@ -99,7 +100,7 @@ public class SettingController extends AbstractController {
         onCryptSpacingRButton.setOnAction(model.getOnCryptSpacing());
         offCryptSpacingRButton.setOnAction(model.getOffCryptSpacing());
         actionPlayerTableCheckBox.setOnAction(model.getPlayerTableAction());
-        findFileButton.setOnAction(model.getFindFile(addressTableLabel));
+        findFileButton.setOnAction(model.getFindFile(addressTableField));
         saveButton.setOnAction(model.getSaveSettings());
         defaultButton.setOnAction(runnable->{
             useGraphicPartOfSettings(model.installDefaultSettings());

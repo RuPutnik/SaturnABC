@@ -55,28 +55,6 @@ public class MainModel {
         return new SaveFile(area);
     }
 
-
-    private boolean checkCodeWord(String key){
-        if(key==null||key.equals("")){
-            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
-            return false;
-        }else
-            return true;
-    }
-    private boolean checkCaesarKey(String key){
-        if(key==null||key.equals("")){
-            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
-           return false;
-        }
-        try {
-            Integer.parseInt(key);
-            return true;
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Используемый ключ содержит недопустимые символы для данного шифра!",false);
-            return false;
-        }
-    }
     //Используем стандартную компоненту для выбора текстового файла
     private File openFile(){
         FileChooser chooser=new FileChooser();
@@ -148,16 +126,22 @@ public class MainModel {
 
         @Override
         public void handle(ActionEvent event) {
-            if(direction==1){
-                String encryptedText=encrypt(numberSelectedCrypt,decryptTextArea.getText(),keyField.getText());
-                if(!encryptedText.equals("")||decryptTextArea.getText().equals("")) {
-                    encryptTextArea.setText(encryptedText);
+            try {
+                if (direction == 1) {
+                    String encryptedText = encrypt(numberSelectedCrypt, decryptTextArea.getText(), keyField.getText());
+                    if (!encryptedText.equals("") || decryptTextArea.getText().equals("")) {
+                        encryptTextArea.setText(encryptedText);
+                    }
+                } else if (direction == -1) {
+                    String decryptedText = decrypt(numberSelectedCrypt, encryptTextArea.getText(), keyField.getText());
+                    if (!decryptedText.equals("") || encryptTextArea.getText().equals("")) {
+                        decryptTextArea.setText(decryptedText);
+                    }
                 }
-            }else if(direction==-1){
-                String decryptedText=decrypt(numberSelectedCrypt,encryptTextArea.getText(),keyField.getText());
-                if(!decryptedText.equals("")||encryptTextArea.getText().equals("")) {
-                    decryptTextArea.setText(decryptedText);
-                }
+            }catch (Exception ex){
+                CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
+                        "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);
+                ex.printStackTrace();
             }
         }
     }

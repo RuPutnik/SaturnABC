@@ -8,10 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import ru.putnik.saturn.ciphers.CaesarCipher;
-import ru.putnik.saturn.ciphers.Cipher;
-import ru.putnik.saturn.ciphers.CodeWordCipher;
-import ru.putnik.saturn.ciphers.TrytCipher;
+import ru.putnik.saturn.ciphers.*;
 import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.controllers.CryptoListController;
 
@@ -44,7 +41,7 @@ public class CryptoListModel {
         cryptsList=FXCollections.observableArrayList();
         cryptsList.add(new CaesarCipher(1));
         cryptsList.add(new CodeWordCipher(2));
-      //  cryptsList.add(new Crypt("Шифр блочный",3,"blockCipher.txt"));
+        cryptsList.add(new BlockCodeWordCipher(3));
         cryptsList.add(new TrytCipher(4));
        // cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
         return cryptsList;
