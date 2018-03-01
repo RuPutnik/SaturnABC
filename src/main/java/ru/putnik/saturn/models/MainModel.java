@@ -127,6 +127,7 @@ public class MainModel {
         @Override
         public void handle(ActionEvent event) {
             try {
+            if(MainModel.numberSelectedCrypt!=0) {
                 if (direction == 1) {
                     String encryptedText = encrypt(numberSelectedCrypt, decryptTextArea.getText(), keyField.getText());
                     if (!encryptedText.equals("") || decryptTextArea.getText().equals("")) {
@@ -138,6 +139,10 @@ public class MainModel {
                         decryptTextArea.setText(decryptedText);
                     }
                 }
+            }else{
+                CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрации",
+                        "Шифр не выбран",false);
+            }
             }catch (Exception ex){
                 CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
                         "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);

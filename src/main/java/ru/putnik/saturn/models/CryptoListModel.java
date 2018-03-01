@@ -43,7 +43,7 @@ public class CryptoListModel {
         cryptsList.add(new CodeWordCipher(2));
         cryptsList.add(new BlockCodeWordCipher(3));
         cryptsList.add(new TrytCipher(4));
-       // cryptsList.add(new Crypt("Шифр расширения словом",5,"extensionCipher.txt"));
+        cryptsList.add(new ExpandCipher(5));
         return cryptsList;
     }
     //Вывод справки о выбранном шифре

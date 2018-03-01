@@ -16,7 +16,8 @@ public class CodeWordCipher extends Cipher {
         for(int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
-                a++;
+               // a++;
+                j--;
             }
 
             if(j==key.length()) j=0;
@@ -25,6 +26,7 @@ public class CodeWordCipher extends Cipher {
         }
         return resultText.toString();
     }
+
 
     @Override
     public boolean checkKey(String key) {
