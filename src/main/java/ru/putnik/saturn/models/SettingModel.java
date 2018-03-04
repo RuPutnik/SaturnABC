@@ -7,8 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.controllers.SettingController;
 import ru.putnik.saturn.main.CreationAlerts;
+import ru.putnik.saturn.main.LogMachine;
 import ru.putnik.saturn.pojo.DefaultSettings;
 import ru.putnik.saturn.pojo.Settings;
 import ru.putnik.saturn.serialization.SerializationMachine;
@@ -31,8 +33,10 @@ public class SettingModel {
             settingsProgram.setPathToPlayerTable(settings.getPathToPlayerTable());
             settingsProgram.setLogging(settings.isLogging());
             settingsProgram.setCryptoSpacing(settings.isCryptoSpacing());
+            LogMachine.log(Level.INFO,"Receiving the configuration program");
         }else {
             installDefaultSettings();
+            LogMachine.log(Level.WARN,"Receiving standard program configuration");
         }
     }
 
@@ -68,6 +72,7 @@ public class SettingModel {
         if(!settingsDirection.exists()){
             settingsDirection.mkdir();
         }
+        LogMachine.log(Level.INFO,"Created folder for settings");
     }
     //Установка дефолтных настроек
     public Settings installDefaultSettings(){
@@ -129,6 +134,7 @@ public class SettingModel {
             fileChooser.setInitialDirectory(new File("C:\\"));
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT","*.txt"));
             try {
+                LogMachine.log(Level.INFO,"Selecting a file with a custom index table");
                 File playerTable = fileChooser.showOpenDialog(new Stage());
                 settingsProgram.setPathToPlayerTable(playerTable.getAbsolutePath());
                 pathField.setText(playerTable.getAbsolutePath());
@@ -137,6 +143,7 @@ public class SettingModel {
                 e.printStackTrace();
                 settingsProgram.setPathToPlayerTable("");
                 pathField.setText("");
+                LogMachine.log(Level.ERROR,"Selecting a file with a custom index table failed");
             }
         }
     }
@@ -145,6 +152,7 @@ public class SettingModel {
 
         @Override
         public void handle(ActionEvent event) {
+            LogMachine.log(Level.INFO,"Saving settings");
             createDirectorySettings();
             SerializationMachine.serializationSettings(settingsProgram,PATH_TO_FILE_SETTINGS);
             SettingController.close();

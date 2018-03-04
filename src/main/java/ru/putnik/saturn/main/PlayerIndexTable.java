@@ -1,5 +1,6 @@
 package ru.putnik.saturn.main;
 
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.models.SettingModel;
 import ru.putnik.saturn.pojo.Settings;
 import ru.putnik.saturn.serialization.SerializationMachine;
@@ -22,6 +23,7 @@ public class PlayerIndexTable {
             String line;
             error = false;
             try {
+                LogMachine.log(Level.INFO,"Loading the download of user table indexes");
                 tableReader = new BufferedReader(new InputStreamReader(new FileInputStream(tableFile), "Windows-1251"));
                 while ((line = tableReader.readLine()) != null) {
                     //Получаем строки с индексами и их значениями
@@ -30,11 +32,13 @@ public class PlayerIndexTable {
                     mapSymbols.put(Integer.parseInt(keyAndValue[0]), keyAndValue[1].charAt(0));
                     mapIndex.put(keyAndValue[1].charAt(0), Integer.parseInt(keyAndValue[0]));
                 }
+                LogMachine.log(Level.INFO,"Loading the table completed successfully");
             } catch (IOException e) {
                 CreationAlerts.showErrorAlert("Ошибка", "Ошибка обработки файла таблицы", "При обработке файла с таблицей " +
                         "пользовательских индексов символов возникла ошибка. Возможно поврежден файл или его структура.", false);
                 e.printStackTrace();
                 error = true;
+                LogMachine.log(Level.ERROR,"Table loading failed");
             }
         }
     }

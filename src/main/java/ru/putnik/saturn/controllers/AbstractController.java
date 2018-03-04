@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.main.CreationAlerts;
+import ru.putnik.saturn.main.LogMachine;
 import ru.putnik.saturn.main.PathToLayout;
 
 import java.io.IOException;
@@ -21,7 +23,7 @@ public abstract class AbstractController extends Application implements PathToLa
     public void start(Stage stage) throws Exception {}
 
     static final String NAME_PROGRAM="SaturnABC";
-    static final String VERSION_PROGRAM="version: 0.8";
+    static final String VERSION_PROGRAM="version: 0.9";
     private static final String LOGO_PATH="images/iconSaturn.png";
     private static Stage stage;
     //Отрисовываем окно программы
@@ -30,8 +32,9 @@ public abstract class AbstractController extends Application implements PathToLa
         Parent parent=null;
         try {
             parent=FXMLLoader.load(getClass().getClassLoader().getResource(getPathToLayout()));
+            LogMachine.log(Level.INFO,"Loading a layout "+getPathToLayout());
         } catch (IOException|NullPointerException e) {
-            System.out.println("Layout "+getPathToLayout()+" not found or generated error!");
+            LogMachine.log(Level.ERROR,"Layout "+getPathToLayout()+" not found or generated error!");
             e.printStackTrace();
             CreationAlerts.showErrorAlert("Ошибка","Ошибка отрисовки окна","Одно или несколько окон программы не смогло сгенерироваться и запущено не будет!",true);
         }
@@ -41,8 +44,9 @@ public abstract class AbstractController extends Application implements PathToLa
         try{
             Image generalIcon=new Image(LOGO_PATH);
             stage.getIcons().add(generalIcon);
+            LogMachine.log(Level.INFO,"Loading a icon");
         }catch (IllegalArgumentException|NullPointerException e){
-            System.out.println("Иконка программы не обнаружена по данному адресу!");
+            LogMachine.log(Level.ERROR,"The program icon is not found at this address!");
             e.printStackTrace();
             //Демонстрация сообщения об ошибке в отдельном окне
             CreationAlerts.showErrorAlert("Ошибка","Ошибка","Ошибка загрузки изображения!",false);
@@ -58,7 +62,7 @@ public abstract class AbstractController extends Application implements PathToLa
         if(stage!=null) {
             stage.close();
         }else {
-            System.out.println("Вы не можете закрыть окно до его создания!");
+            LogMachine.log(Level.WARN,"You cannot close the window until it is created!");
         }
     }
 }

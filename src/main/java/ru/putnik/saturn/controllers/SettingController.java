@@ -3,6 +3,8 @@ package ru.putnik.saturn.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
+import ru.putnik.saturn.main.LogMachine;
 import ru.putnik.saturn.models.SettingModel;
 import ru.putnik.saturn.pojo.Settings;
 
@@ -78,6 +80,7 @@ public class SettingController extends AbstractController {
             addressTableField.setText(settings.getPathToPlayerTable());
             addressTableField.setFocusTraversable(false);
         }
+        LogMachine.log(Level.INFO,"Set the graphics settings widgets");
     }
 
     @Override

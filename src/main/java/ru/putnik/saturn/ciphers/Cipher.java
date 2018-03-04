@@ -25,8 +25,10 @@ public abstract class Cipher {
     public abstract boolean checkKey(String key);
     public abstract String generateKey();
 
-    char cryptSymbol(char symbol, int key, int direction){
+    char cryptSymbol(char symbol, int keyOffset, int direction){
+
         if(settings.isPlayerTableIndexs()) {
+           int key=table.getIndexForSymbol((char)keyOffset);
             if (symbol == ' ' && !settings.isCryptoSpacing()) {
                 return symbol;
             } else {
@@ -36,7 +38,8 @@ public abstract class Cipher {
             if (symbol == ' ' && !settings.isCryptoSpacing()) {
                 return symbol;
             } else {
-                return (char) ((int) symbol + key * direction);
+                int iv=(int) symbol + keyOffset * direction;//integer value
+                return (char) (iv);
             }
         }
     }

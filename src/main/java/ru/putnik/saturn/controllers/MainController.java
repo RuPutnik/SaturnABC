@@ -2,7 +2,12 @@ package ru.putnik.saturn.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
+import ru.putnik.saturn.main.LogMachine;
 import ru.putnik.saturn.models.MainModel;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -62,6 +67,7 @@ public class MainController extends AbstractController {
     public void start(Stage stage) throws Exception {
         super.start(stage);
         mainStage=stage;
+        LogMachine.log(Level.INFO,"Render Main Window");
         renderWindow(getStage(),910,520);
     }
 
@@ -75,10 +81,6 @@ public class MainController extends AbstractController {
         return mainStage;
     }
 
-    public Label getTypeCryptLabel() {
-        return typeCryptLabel;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cryptoListWindow=new CryptoListController(new Stage(),typeCryptLabel);
@@ -87,6 +89,8 @@ public class MainController extends AbstractController {
         mainModel=new MainModel(decryptedTextArea,encryptedTextArea,keyTextField);
 
         mainStage.setTitle(NAME_PROGRAM+" "+VERSION_PROGRAM+"|Главное окно");
+        decryptedTextArea.setFont(Font.font("Times New Roman", FontWeight.findByWeight(50), FontPosture.REGULAR,15));
+        encryptedTextArea.setFont(Font.font("Times New Roman", FontWeight.findByWeight(50), FontPosture.REGULAR,15));
 
         windowCryptsMenuItem.setOnAction(event -> cryptoListWindow.renderWindow(cryptoListWindow.getStage(),630,540));
         settingsMenuItem.setOnAction(event -> settingWindow.renderWindow(settingWindow.getStage(),463,235));
@@ -95,7 +99,7 @@ public class MainController extends AbstractController {
         saveFileMenuItem.setOnAction(mainModel.getSaveFile(decryptedTextArea));
         saveEncryptedFileMenuItem.setOnAction(mainModel.getSaveFile(encryptedTextArea));
         infoMenuItem.setOnAction(event -> infoWindow.renderWindow(infoWindow.getStage(),425,490));
-        exitMenuItem.setOnAction(event -> System.exit(0));
+        exitMenuItem.setOnAction(event -> {LogMachine.log(Level.INFO,"Exit the program"); System.exit(0);});
         clearLeftWindowButton.setOnAction(new MainModel.CleanText<>(decryptedTextArea));
         clearRightWindowButton.setOnAction(new MainModel.CleanText<>(encryptedTextArea));
         clearKeyFieldButton.setOnAction(new MainModel.CleanText<>(keyTextField));
@@ -103,6 +107,7 @@ public class MainController extends AbstractController {
         decryptButton.setOnAction(mainModel.getCryptoOperation(-1));
         generateKeyButton.setOnAction(mainModel.getGeneratorKey());
         //Указываем слушателя события, происходящего при нажатии на крестик(закрытии главного окна программы)
-        mainStage.setOnCloseRequest(event -> System.exit(0));
+        mainStage.setOnCloseRequest(event -> {LogMachine.log(Level.INFO,"Exit the program"); System.exit(0);});
     }
+
 }

@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.main.CreationAlerts;
+import ru.putnik.saturn.main.LogMachine;
 
 import java.io.*;
 import java.net.URL;
@@ -48,6 +50,7 @@ public class InfoController extends AbstractController {
     //Чтение текста справки из файла, расположенного в resources
     public void printHelpInfo(){
         try {
+            LogMachine.log(Level.INFO,"Download help file");
             String realPath=getClass().getClassLoader().getResource(pathHelpFile).getFile();
             InputStreamReader fileReader=new InputStreamReader(new FileInputStream(realPath));
             BufferedReader bufferedReader=new BufferedReader(fileReader);
@@ -55,10 +58,12 @@ public class InfoController extends AbstractController {
             while ((lineText=bufferedReader.readLine())!=null){
                 infoArea.appendText(lineText+"\n");
             }
+            LogMachine.log(Level.INFO,"Help file loaded successfully");
         } catch (IOException e) {
             e.printStackTrace();
             CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки справки",
            "Текст справки не смог загрузиться. Возможно файл справки не существует или поврежден.",false);
+            LogMachine.log(Level.ERROR,"Error loading help file");
         }
     }
 }

@@ -8,7 +8,9 @@ import javafx.scene.control.TextInputControl;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.main.CreationAlerts;
+import ru.putnik.saturn.main.LogMachine;
 
 import java.io.*;
 
@@ -37,13 +39,27 @@ public class MainModel {
     }
 
     private String decrypt(int numberCipher,String text,String key){
-        String decryptedText;
-        decryptedText=CryptoListModel.cryptsList.get(numberCipher-1).crypt(text,key,-1);
+        String decryptedText="";
+        if(CryptoListModel.cryptsList.get(numberCipher-1).checkKey(key)) {
+            decryptedText = CryptoListModel.cryptsList.get(numberCipher - 1).crypt(text, key, -1);
+            LogMachine.log(Level.INFO, "Decryption (cipher " + MainModel.nameSelectedCrypt + ")");
+        }else {
+            CreationAlerts.showWarningAlert("Ошиюка","Ошибка шифрации","Заданный ключ не подходит." +
+                    " Возможно поле ключа пусто",false);
+            LogMachine.log(Level.WARN,"The specified key is not valid. Maybe the key field is empty");
+        }
         return decryptedText;
     }
     private String encrypt(int numberCipher,String text,String key){
-        String encryptedText;
-        encryptedText=CryptoListModel.cryptsList.get(numberCipher-1).crypt(text,key,1);
+        String encryptedText="";
+        if(CryptoListModel.cryptsList.get(numberCipher-1).checkKey(key)) {
+            encryptedText = CryptoListModel.cryptsList.get(numberCipher - 1).crypt(text, key, 1);
+            LogMachine.log(Level.INFO, "Encryption (cipher " + MainModel.nameSelectedCrypt + ")");
+        }else {
+            CreationAlerts.showWarningAlert("Ошиюка","Ошибка шифрации","Заданный ключ не подходит. " +
+                    "Возможно поле ключа пусто",false);
+            LogMachine.log(Level.WARN,"The specified key is not valid. Maybe the key field is empty");
+        }
         return encryptedText;
     }
 
@@ -57,6 +73,7 @@ public class MainModel {
 
     //Используем стандартную компоненту для выбора текстового файла
     private File openFile(){
+        LogMachine.log(Level.INFO,"Open file");
         FileChooser chooser=new FileChooser();
         chooser.setInitialDirectory(new File("C:\\"));
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"),
@@ -66,6 +83,7 @@ public class MainModel {
     //Читаем текст из файла и загружаем его в TextArea
     private void fillTextAreaForAFile(TextArea fillingArea,File textFile){
         try {
+            LogMachine.log(Level.INFO,"Populate the window with help text");
             //Кодировку можно сделать выбираемой
             BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(textFile),"UTF-8"));
             String line;
@@ -73,14 +91,18 @@ public class MainModel {
             while ((line=bufferedReader.readLine())!=null){
                 fillingArea.appendText(line+"\n");
             }
+            LogMachine.log(Level.INFO,"The filling has finished successfully");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             CreationAlerts.showErrorAlert("Ошибка","Ошибка чтения файла","Выбранный файл не существует или недоступен",false);
+            LogMachine.log(Level.ERROR,"The file you selected does not exist or is inaccessible");
         }catch (IOException ioe){
             ioe.printStackTrace();
             CreationAlerts.showErrorAlert("Ошибка","Ошибка чтения файла","Ошибка чтения выбранного файла",false);
-        }catch (NullPointerException ex){
+            LogMachine.log(Level.ERROR,"Error reading selected file");
+        }catch (Exception ex){
             ex.printStackTrace();
+            LogMachine.log(Level.ERROR,"Unknown error");
         }
     }
     //Выбираем файл, в который будем сохранять текст и(или) создаем этот файл
@@ -94,12 +116,16 @@ public class MainModel {
     private void saveFile(TextArea textArea,File textFile){
         if(textFile!=null) {
             try {
+                LogMachine.log(Level.INFO,"Saving file");
                 FileWriter writer = new FileWriter(textFile);
                 writer.write(textArea.getText());
                 writer.flush();
                 writer.close();
+                LogMachine.log(Level.INFO,"Saving the file completed successfully");
             } catch (IOException e) {
                 e.printStackTrace();
+                CreationAlerts.showErrorAlert("Ошибка","Ошибка сохранения","При сохранении файла возникла ошибка",false);
+                LogMachine.log(Level.ERROR,"Saving the file failed");
             }
         }
     }
@@ -142,11 +168,13 @@ public class MainModel {
             }else{
                 CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрации",
                         "Шифр не выбран",false);
+                LogMachine.log(Level.WARN,"The cipher is not selected");
             }
             }catch (Exception ex){
                 CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
                         "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);
                 ex.printStackTrace();
+                LogMachine.log(Level.ERROR,"An error occurred while performing encryption");
             }
         }
     }

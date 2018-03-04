@@ -13,16 +13,17 @@ public class CodeWordCipher extends Cipher {
     public String crypt(String text, String key, int direction) {
         StringBuilder resultText= new StringBuilder();
         int j=0;
+
         for(int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
-               // a++;
-                j--;
+                a++;
             }
 
-            if(j==key.length()) j=0;
-            resultText.append(cryptSymbol(text.charAt(a),(int)(key.charAt(j)),direction));
-            j++;
+             if (j == key.length()) j = 0;
+             resultText.append(cryptSymbol(text.charAt(a), (byte) (key.charAt(j))+70, direction));
+             j++;
+
         }
         return resultText.toString();
     }

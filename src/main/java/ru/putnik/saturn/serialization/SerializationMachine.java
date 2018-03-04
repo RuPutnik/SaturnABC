@@ -1,5 +1,7 @@
 package ru.putnik.saturn.serialization;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.pojo.DefaultSettings;
 import ru.putnik.saturn.pojo.Settings;
@@ -17,6 +19,7 @@ public class SerializationMachine {
             CreationAlerts.showErrorAlert("Ошибка","Ошибка сохранения настроек",
                     "При сохранении настроек приложения возникла ошибка!",false);
             e.printStackTrace();
+            LogManager.getLogger().log(Level.FATAL,"Serialization error");
         }
     }
     //Десериализация настроек
@@ -29,11 +32,14 @@ public class SerializationMachine {
             CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки натроек",
                     "При загрузке настроек приложения возникла ошибка! Возможно файл поврежден.",false);
             e.printStackTrace();
+            LogManager.getLogger().log(Level.FATAL,"Error loading settings, error deserialization");
         } catch (ClassNotFoundException e) {
             CreationAlerts.showWarningAlert("Ошибка","Ошибка загрузки натроек",
                     "При загрузке настроек приложения возникла ошибка! Возможно файл не существует. Будут использоваться стандартные настройки.",false);
             e.printStackTrace();
             settings=DefaultSettings.getSettings();
+            LogManager.getLogger().log(Level.FATAL,"An error occurred while loading application settings! " +
+                    "Maybe the file doesn't exist. Standard settings will be used.");
         }
         return settings;
     }

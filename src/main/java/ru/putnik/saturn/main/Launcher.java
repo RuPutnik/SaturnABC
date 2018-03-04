@@ -1,5 +1,6 @@
 package ru.putnik.saturn.main;
 
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.controllers.MainController;
 
 /**
@@ -8,7 +9,7 @@ import ru.putnik.saturn.controllers.MainController;
 public class Launcher{
     //Точка входа программы
     public static void main(String[] args) {
+        LogMachine.log(Level.INFO,"Start program");
         MainController.start();
     }
-
 }

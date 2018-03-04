@@ -8,9 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import org.apache.logging.log4j.Level;
 import ru.putnik.saturn.ciphers.*;
 import ru.putnik.saturn.main.CreationAlerts;
 import ru.putnik.saturn.controllers.CryptoListController;
+import ru.putnik.saturn.main.LogMachine;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -38,6 +40,7 @@ public class CryptoListModel {
     }
     //Добавление существующих шифров в список
     public ObservableList<Cipher> prepareList(){
+        LogMachine.log(Level.INFO,"Preparation of the list of ciphers");
         cryptsList=FXCollections.observableArrayList();
         cryptsList.add(new CaesarCipher(1));
         cryptsList.add(new CodeWordCipher(2));
@@ -49,6 +52,7 @@ public class CryptoListModel {
     //Вывод справки о выбранном шифре
     public void printCipherInfo(String nameFile){
         try {
+        LogMachine.log(Level.INFO,"File download information on the cipher "+nameFile);
         String realPaths=getClass().getClassLoader().getResource("texts/textsCrypts/"+nameFile).getFile();
         InputStreamReader streamReader=new InputStreamReader(new FileInputStream(realPaths));
         BufferedReader bufferedReader=new BufferedReader(streamReader);
@@ -57,11 +61,13 @@ public class CryptoListModel {
             while ((infoLine = bufferedReader.readLine())!= null) {
                 infoCryptTextArea.appendText(infoLine+"\n");
             }
+        LogMachine.log(Level.INFO,"The download of the cipher info file completed successfully");
         }catch (IOException ex){
             ex.printStackTrace();
             CreationAlerts.showErrorAlert("Ошибка","Ошибка загрузки справки по шрифту",
            "Информация о выбранном шрфите не была загружена. Возможно файл справки поврежден или не существует.",
            false);
+            LogMachine.log(Level.ERROR,"The download of the cipher info file failed");
         }
     }
     //Возвращает имя файла помощи по номеру шифра
@@ -104,10 +110,8 @@ public class CryptoListModel {
             tempNameSelectedCrypt=newValue.getNameCipher();
             tempNumberSelectedCrypt=newValue.getNumberCipher();
             selectedCryptLabel.setText(tempNameSelectedCrypt);
-
-           // selectedCipherInfo(tempNumberSelectedCrypt);
+            LogMachine.log(Level.INFO,"The selected cipher "+newValue.getNameFileInfo());
             printCipherInfo(newValue.getNameFileInfo());
-
         }
     }
     //Обработчик события. Сохраняем информацию и выбранном шифре и выводим её на нужные виджеты Label

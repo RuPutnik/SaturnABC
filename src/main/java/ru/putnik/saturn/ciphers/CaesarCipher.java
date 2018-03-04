@@ -29,7 +29,6 @@ public class CaesarCipher extends Cipher {
     @Override
     public boolean checkKey(String key) {
         if(key==null||key.equals("")){
-            CreationAlerts.showWarningAlert("Ошибка","Ошибка шифрования","Поля ключа пусто!",false);
             return false;
         }
         try {

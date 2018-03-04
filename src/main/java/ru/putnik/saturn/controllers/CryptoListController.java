@@ -37,6 +37,7 @@ public class CryptoListController extends AbstractController {
     public CryptoListController(Stage stage, Label label){
         cryptoListStage=stage;
         mainCryptLabel=label;
+
     }
 
     @Override
