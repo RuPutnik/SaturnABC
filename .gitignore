@@ -3,3 +3,5 @@ SaturnABC.iml
 out
 pom.xml
 target
+bugslist.txt
+logs

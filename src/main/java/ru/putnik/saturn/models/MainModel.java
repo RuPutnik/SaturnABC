@@ -174,7 +174,7 @@ public class MainModel {
                 CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
                         "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);
                 ex.printStackTrace();
-                LogMachine.log(Level.ERROR,"An error occurred while performing encryption");
+                LogMachine.log(Level.ERROR,"An error occurred while performing encryption or decryption");
             }
         }
     }
