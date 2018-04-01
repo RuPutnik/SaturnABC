@@ -5,3 +5,11 @@ pom.xml
 target
 bugslist.txt
 logs
+DevKit-1.0.jar.md5
+DevKit-1.0.jar.sha1
+DevKit-1.0.pom
+DevKit-1.0.pom.md5
+DevKit-1.0.pom.sha1
+maven-metadata.xml
+maven-metadata.xml.md5
+maven-metadata.xml.sha1
