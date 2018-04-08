@@ -169,7 +169,7 @@ public class MainModel {
                 LogMachine.log(Level.WARN,"The cipher is not selected");
             }
             }catch (Exception ex){
-               // ex.printStackTrace();
+                ex.printStackTrace();
                 CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
                         "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);
 
