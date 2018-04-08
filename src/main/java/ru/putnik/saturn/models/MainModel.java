@@ -91,6 +91,7 @@ public class MainModel {
             while ((line=bufferedReader.readLine())!=null){
                 fillingArea.appendText(line+"\n");
             }
+            fillingArea.deleteText(fillingArea.getLength()-1,fillingArea.getLength());
             LogMachine.log(Level.INFO,"The filling has finished successfully");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -129,9 +130,6 @@ public class MainModel {
             }
         }
     }
-
-
-
     //Обработчик событий, отвечающий за очистку левого(правого) окна или поля для ключа при нажатии на кнопку
     public static class CleanText<T extends TextInputControl> implements EventHandler<ActionEvent>{
         T textComponent;
@@ -171,9 +169,10 @@ public class MainModel {
                 LogMachine.log(Level.WARN,"The cipher is not selected");
             }
             }catch (Exception ex){
+               // ex.printStackTrace();
                 CreationAlerts.showErrorAlert("Ошибка","Ошибка шифрации",
                         "При выполнении шифрования произошла ошибка. Свяжитесь с разработчиком для её исправления.",true);
-                ex.printStackTrace();
+
                 LogMachine.log(Level.ERROR,"An error occurred while performing encryption or decryption");
             }
         }

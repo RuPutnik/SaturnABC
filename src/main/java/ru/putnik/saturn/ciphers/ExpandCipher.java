@@ -30,9 +30,7 @@ public class ExpandCipher extends Cipher{
         if(temp1.length()!=0){
             lineArg=temp1.length();
             args=new int[lineArg];
-            System.out.println("length "+args.length);
             for(int k=0;k<lineArg;k++){
-                System.out.println("k="+k);
                 args[k]=Integer.parseInt(String.valueOf(temp1.toString().charAt(k)));
             }
 

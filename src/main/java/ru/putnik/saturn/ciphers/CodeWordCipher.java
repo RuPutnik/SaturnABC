@@ -17,12 +17,11 @@ public class CodeWordCipher extends Cipher {
         for(int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
-                a++;
+            }else {
+                if (j == key.length()) j = 0;
+                resultText.append(cryptSymbol(text.charAt(a), (byte) (key.charAt(j)) + 70, direction));
+                j++;
             }
-
-             if (j == key.length()) j = 0;
-             resultText.append(cryptSymbol(text.charAt(a), (byte) (key.charAt(j))+70, direction));
-             j++;
 
         }
         return resultText.toString();

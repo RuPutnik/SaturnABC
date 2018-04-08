@@ -14,12 +14,19 @@ public class CaesarCipher extends Cipher {
             StringBuilder resultText = new StringBuilder();
             int digitKey = Integer.parseInt(key);
 
+            System.out.println(text);
+            System.out.println(text.length());
+            for (int a=0;a<text.length();a++){
+                System.out.println(a+")"+text.charAt(a));
+            }
+
             for (int a = 0; a < text.length(); a++) {
                 if (String.valueOf(text.charAt(a)).equals("\n")) {
                     resultText.append("\n");
-                    a++;
+                }else {
+                    resultText.append(cryptSymbol(text.charAt(a), digitKey, direction));
                 }
-                resultText.append(cryptSymbol(text.charAt(a), digitKey, direction));
+
             }
             return resultText.toString();
         }else

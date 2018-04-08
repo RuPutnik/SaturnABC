@@ -18,13 +18,12 @@ public class TrytCipher extends Cipher {
         for (int a=0;a<text.length();a++){
             if(String.valueOf(text.charAt(a)).equals("\n")){
                 resultText.append("\n");
-                a++;
+            }else {
+                if (c > 30) b = 0;
+                b = (int) Math.sqrt(c);
+                resultText.append(cryptSymbol(text.charAt(a), digitKey + b, direction));
+                c++;
             }
-
-            if(c>30) b=0;
-            b=(int)Math.sqrt(c);
-            resultText.append(cryptSymbol(text.charAt(a),digitKey+b,direction));
-            c++;
         }
 
         return resultText.toString();
