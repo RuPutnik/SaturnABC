@@ -2,6 +2,8 @@ package ru.putnik.saturn.ciphers;
 
 import ru.putnik.saturn.main.CreationAlerts;
 
+import java.util.Random;
+
 public class CaesarCipher extends Cipher {
     public CaesarCipher(int numberCipher){
         super(numberCipher);
@@ -50,6 +52,7 @@ public class CaesarCipher extends Cipher {
 
     @Override
     public String generateKey() {
-        return null;
+        int randomKey=new Random().nextInt(20);
+        return String.valueOf(randomKey);
     }
 }

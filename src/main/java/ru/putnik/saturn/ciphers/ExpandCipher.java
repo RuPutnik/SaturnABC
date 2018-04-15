@@ -2,6 +2,8 @@ package ru.putnik.saturn.ciphers;
 
 import ru.putnik.saturn.main.CreationAlerts;
 
+import java.util.Random;
+
 public class ExpandCipher extends Cipher{
     public ExpandCipher(int numberCipher){
         super(numberCipher);
@@ -74,6 +76,54 @@ public class ExpandCipher extends Cipher{
 
     @Override
     public String generateKey() {
-        return null;
+        Random random=new Random();
+        int lengthCodeWordFirstPart=2+random.nextInt(8);
+        StringBuilder codeWord=new StringBuilder();
+
+        for (int a=0;a<lengthCodeWordFirstPart;a++){
+            codeWord.append((char)(48+random.nextInt(74)));
+            if(codeWord.charAt(a)==':'){
+                codeWord.deleteCharAt(a);
+                a--;
+            }
+        }
+        //Сформировали первую часть кодового слова(то что до двоеточия)
+
+        //Теперь формируем вторую часть(цифры и двоеточие)
+
+        codeWord.append(":");
+        int lengthCodeWordSecondPart=1+random.nextInt(2);
+        int digitsGenerated[]=new int[lengthCodeWordSecondPart];
+        for (int b=0;b<lengthCodeWordSecondPart;b++){
+            int digit=2 + random.nextInt(7);
+
+            if(b>0) {
+                if (checkDigit(digit, digitsGenerated)) {
+                    digitsGenerated[b] = digit;
+                    codeWord.append(digitsGenerated[b]);
+                } else {
+                    b--;
+                }
+            }else {
+                digitsGenerated[b] = digit;
+                codeWord.append(digitsGenerated[b]);
+            }
+        }
+        return codeWord.toString();
+    }
+    //Метод проверяет, может ли данное число быть добавленным в массив чисел, вставляемых после двоеточия в кодовом слове
+    //Правила такие: 1) цифры не могут повторяться, 2)если одна из цифер явлется множителем(делителем) другой,
+    // то они могут распологаться только в порядке убывания, например 8 4 2, но не 2 4 8, иначе 4 и 8 никогда не будут задействованы
+    private boolean checkDigit(int digit,int arrayDigits[]){
+        boolean result=true;
+
+        for (int digitOfArray:arrayDigits){
+            if(digit==digitOfArray) return false;//проверка на повторения
+
+            if(digitOfArray!=0) {//Поскольку не все элементы массива еще заполнены
+                if (digitOfArray % digit == 0) return false;//проверка 2 условия
+            }
+        }
+        return result;
     }
 }

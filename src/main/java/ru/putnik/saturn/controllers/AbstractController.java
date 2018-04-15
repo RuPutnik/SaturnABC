@@ -23,7 +23,7 @@ public abstract class AbstractController extends Application implements PathToLa
     public void start(Stage stage) throws Exception {}
 
     static final String NAME_PROGRAM="SaturnABC";
-    static final String VERSION_PROGRAM="version: 0.9.3";
+    static final String VERSION_PROGRAM="version: 1.0";
     private static final String LOGO_PATH="images/iconSaturn.png";
     private static Stage stage;
     //Отрисовываем окно программы

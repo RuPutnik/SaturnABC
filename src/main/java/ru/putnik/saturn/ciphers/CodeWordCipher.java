@@ -2,6 +2,8 @@ package ru.putnik.saturn.ciphers;
 
 import ru.putnik.saturn.main.CreationAlerts;
 
+import java.util.Random;
+
 public class CodeWordCipher extends Cipher {
     public CodeWordCipher(int numberCipher){
         super(numberCipher);
@@ -39,6 +41,13 @@ public class CodeWordCipher extends Cipher {
 
     @Override
     public String generateKey() {
-        return null;
+        Random random=new Random();
+        int lengthCodeWord=2+random.nextInt(8);
+        StringBuilder codeWord=new StringBuilder();
+
+        for (int a=0;a<lengthCodeWord;a++){
+         codeWord.append((char)(48+random.nextInt(74)));
+        }
+        return codeWord.toString();
     }
 }

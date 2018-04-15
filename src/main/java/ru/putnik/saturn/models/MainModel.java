@@ -181,7 +181,7 @@ public class MainModel {
     public class GeneratorRandomKey implements EventHandler<ActionEvent>{
         @Override
         public void handle(ActionEvent event) {
-            keyField.setText(CryptoListModel.cryptsList.get(numberSelectedCrypt).generateKey());
+            keyField.setText(CryptoListModel.cryptsList.get(numberSelectedCrypt-1).generateKey());
         }
     }
     //Обработчик нажатия на пункт меню открытия файла
